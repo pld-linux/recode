@@ -1,0 +1,34 @@
+diff -ruN recode-3.5.orig/po/Makefile.in.in recode-3.5/po/Makefile.in.in
+--- recode-3.5.orig/po/Makefile.in.in	Sat May  2 06:11:03 1998
++++ recode-3.5/po/Makefile.in.in	Sun Sep 19 14:49:47 1999
+@@ -130,22 +130,22 @@
+ 	    $(SHELL) $(top_srcdir)/mkinstalldirs $$dir; \
+ 	  fi; \
+ 	  if test -r $$cat; then \
+-	    $(INSTALL_DATA) $$cat $$dir/$(PACKAGE)$(INSTOBJEXT); \
+-	    echo "installing $$cat as $$dir/$(PACKAGE)$(INSTOBJEXT)"; \
++	    $(INSTALL_DATA) $$cat $(DESTDIR)/$$dir/$(PACKAGE)$(INSTOBJEXT); \
++	    echo "installing $$cat as $(DESTDIR)/$$dir/$(PACKAGE)$(INSTOBJEXT)"; \
+ 	  else \
+-	    $(INSTALL_DATA) $(srcdir)/$$cat $$dir/$(PACKAGE)$(INSTOBJEXT); \
++	    $(INSTALL_DATA) $(srcdir)/$$cat $(DESTDIR)/$$dir/$(PACKAGE)$(INSTOBJEXT); \
+ 	    echo "installing $(srcdir)/$$cat as" \
+-		 "$$dir/$(PACKAGE)$(INSTOBJEXT)"; \
++		 "$(DESTDIR)/$$dir/$(PACKAGE)$(INSTOBJEXT)"; \
+ 	  fi; \
+ 	  if test -r $$cat.m; then \
+-	    $(INSTALL_DATA) $$cat.m $$dir/$(PACKAGE)$(INSTOBJEXT).m; \
+-	    echo "installing $$cat.m as $$dir/$(PACKAGE)$(INSTOBJEXT).m"; \
++	    $(INSTALL_DATA) $$cat.m $(DESTDIR)/$$dir/$(PACKAGE)$(INSTOBJEXT).m; \
++	    echo "installing $$cat.m as $(DESTDIR)/$$dir/$(PACKAGE)$(INSTOBJEXT).m"; \
+ 	  else \
+ 	    if test -r $(srcdir)/$$cat.m ; then \
+ 	      $(INSTALL_DATA) $(srcdir)/$$cat.m \
+-		$$dir/$(PACKAGE)$(INSTOBJEXT).m; \
++		$(DESTDIR)/$$dir/$(PACKAGE)$(INSTOBJEXT).m; \
+ 	      echo "installing $(srcdir)/$$cat as" \
+-		   "$$dir/$(PACKAGE)$(INSTOBJEXT).m"; \
++		   "$(DESTDIR)/$$dir/$(PACKAGE)$(INSTOBJEXT).m"; \
+ 	    else \
+ 	      true; \
+ 	    fi; \
