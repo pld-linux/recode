@@ -1,4 +1,4 @@
-# $Revision: 1.9 $ $Date: 2000-03-28 16:55:06 $
+# $Revision: 1.10 $ $Date: 2000-04-01 11:15:39 $
 Summary:	Utility for converting text between multiple character sets
 Summary(pl):	Uniwersjalny konwerter zestawów znaków
 Name:		recode
@@ -11,7 +11,7 @@ Source:		http://www.iro.umontreal.ca/contrib/recode/recode-%{version}.tar.gz
 Patch0:		recode-pl.po.patch
 Patch1:		recode-install.patch
 BuildRequires:	gettext-devel
-Buildroot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Free `recode' converts files between various character sets and surfaces.
