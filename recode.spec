@@ -1,4 +1,4 @@
-# $Revision: 1.22 $ $Date: 2002-01-18 02:14:47 $
+# $Revision: 1.23 $ $Date: 2002-02-22 23:29:40 $
 Summary:	Utility for converting text between multiple character sets
 Summary(pl):	Uniwersalny konwerter zestawСw znakСw
 Name:		recode
@@ -6,9 +6,6 @@ Version:	3.5d
 Release:	4
 License:	GPL/LGPL
 Group:		Applications/Text
-Group(de):	Applikationen/Text
-Group(fr):	Utilitaires/Texte
-Group(pl):	Aplikacje/Tekst
 Source0:	http://www.iro.umontreal.ca/contrib/recode/%{name}-%{version}.tar.gz
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-use_malloc_realloc.patch
@@ -36,13 +33,6 @@ kodowania, wЁacznie z popularnymi ISO-8859, CP-XXXX oraz Unicode.
 Summary:	Header filess and documentations for librecode
 Summary(pl):	Pliki nagЁСwkowe i dokumentacja do librecode
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(ru):	Разработка/Библиотеки
-Group(uk):	Розробка/Б╕бл╕отеки
 Requires:	%{name} = %{version}
 
 %description devel
@@ -55,13 +45,6 @@ Pliki nagЁСwkowe i dokumentacja do librecode.
 Summary:	Static library librecode
 Summary(pl):	Biblioteka statyczna librecode
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(ru):	Разработка/Библиотеки
-Group(uk):	Розробка/Б╕бл╕отеки
 Requires:	%{name}-devel = %{version}
 
 %description static
