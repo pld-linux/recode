@@ -1,4 +1,4 @@
-# $Revision: 1.26 $ $Date: 2002-05-21 23:14:37 $
+# $Revision: 1.27 $ $Date: 2002-06-23 20:32:34 $
 Summary:	Utility for converting text between multiple character sets
 Summary(pl):	Uniwersalny konwerter zestawów znaków
 Name:		recode
@@ -61,7 +61,7 @@ Biblioteka statyczna librecode.
 %patch3 -p1
 
 %build
-libtoolize --copy --force
+%{__libtoolize}
 aclocal
 %{__autoconf}
 %{__automake}
