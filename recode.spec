@@ -36,7 +36,7 @@ kodowania, w³±cznie z popularnymi ISO-8859, CP-XXXX oraz Unicode.
 Summary:	Header files and documentations for librecode
 Summary(pl):	Pliki nag³ówkowe i dokumentacja do librecode
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Header files and documentations for librecode.
@@ -48,7 +48,7 @@ Pliki nag³ówkowe i dokumentacja do librecode.
 Summary:	Static librecode library
 Summary(pl):	Biblioteka statyczna librecode
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static librecode library.
@@ -77,7 +77,8 @@ Biblioteka statyczna librecode.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %find_lang %{name}
 
