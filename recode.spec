@@ -1,4 +1,4 @@
-# $Revision: 1.14 $ $Date: 2000-06-09 07:23:58 $
+# $Revision: 1.15 $ $Date: 2000-06-09 07:55:10 $
 Summary:	Utility for converting text between multiple character sets
 Summary(pl):	Uniwersjalny konwerter zestawów znaków
 Name:		recode
@@ -62,7 +62,7 @@ gettextize --copy --force
 autoconf
 LDFLAGS="-s"; export LDFLAGS
 %configure 
-make
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
