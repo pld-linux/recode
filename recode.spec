@@ -1,4 +1,4 @@
-# $Revision: 1.4 $ $Date: 1999-09-19 12:04:38 $
+# $Revision: 1.5 $ $Date: 1999-09-19 12:24:59 $
 Summary:	Utility for converting text between multiple character sets.
 Summary(pl):	Uniwersjalny konwerter zestawów znaków.
 Name:		recode
@@ -9,6 +9,7 @@ Group:		Utilities/Text
 Group(pl):	Narzêdzia/Tekst
 Source:		http://www.iro.umontreal.ca/contrib/recode/recode-%{version}.tar.gz
 Patch0:		recode-pl.po.patch
+Patch1:		recode-install.patch
 Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -40,6 +41,7 @@ do programów u¿ytkownika.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 autoconf
