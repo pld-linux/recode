@@ -1,4 +1,4 @@
-# $Revision: 1.10 $ $Date: 2000-04-01 11:15:39 $
+# $Revision: 1.11 $ $Date: 2000-05-01 20:11:41 $
 Summary:	Utility for converting text between multiple character sets
 Summary(pl):	Uniwersjalny konwerter zestawów znaków
 Name:		recode
@@ -28,7 +28,6 @@ Summary:	Header filess and documentations for librecode
 Summary(pl):	Pliki nag³ówkowe i dokumentacja do librecode
 Group:		Development/Libraries
 Group(pl):	Programowanie/Biblioteki
-Prereq:		/usr/sbin/fix-info-dir
 Requires:	%{name} = %{version}
 
 %description devel
@@ -78,10 +77,10 @@ gzip -9nf $RPM_BUILD_ROOT{%{_infodir}/*,%{_mandir}/man1/*} \
 %postun -p /sbin/ldconfig
 
 %post devel
-/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+[ -x /usr/sbin/fix-info-dir ] && /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %postun devel
-/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+[ -x /usr/sbin/fix-info-dir ] && /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
