@@ -2,7 +2,7 @@ Summary:	Utility for converting text between multiple character sets
 Summary(pl):	Uniwersalny konwerter miêdzy zestawami znaków
 Name:		recode
 Version:	3.6
-Release:	1
+Release:	2
 License:	GPL/LGPL
 Group:		Applications/Text
 Source0:	ftp://ftp.gnu.org/gnu/recode/%{name}-%{version}.tar.gz
