@@ -1,4 +1,4 @@
-# $Revision: 1.18 $ $Date: 2001-03-16 18:04:11 $
+# $Revision: 1.19 $ $Date: 2001-07-25 16:31:00 $
 Summary:	Utility for converting text between multiple character sets
 Summary(pl):	Uniwersjalny konwerter zestawów znaków
 Name:		recode
@@ -87,10 +87,10 @@ gzip -9nf AUTHORS NEWS BACKLOG README THANKS TODO
 %postun -p /sbin/ldconfig
 
 %post devel
-[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+%fix_info_dir
 
 %postun devel
-[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+%fix_info_dir
 
 %clean
 rm -rf $RPM_BUILD_ROOT
