@@ -1,4 +1,4 @@
-# $Revision: 1.5 $ $Date: 1999-09-19 12:24:59 $
+# $Revision: 1.6 $ $Date: 1999-09-19 13:16:07 $
 Summary:	Utility for converting text between multiple character sets.
 Summary(pl):	Uniwersjalny konwerter zestawów znaków.
 Name:		recode
@@ -54,12 +54,9 @@ make
 rm -rf $RPM_BUILD_ROOT
 
 #install -d $RPM_BUILD_ROOT/{bin,include,info,man/man1,lib,share}
-#install -d $RPM_BUILD_ROOT/share/locale/{da,de,es,fr,nl,pl,pt,sl,sv}
+install -d $RPM_BUILD_ROOT/%{_prefix}/share/locale/{da,de,es,fr,nl,pl,pt,sl,sv}/LC_MESSAGES
 
-make    install \
-    LIB_PREFIX="$RPM_BUILD_ROOT%{_libdir}" \
-    BIN_PREFIX="$RPM_BUILD_ROOT%{_bindir}" \
-    INC_PREFIX="$RPM_BUILD_ROOT%{_includedir}"
+make    install DESTDIR=$RPM_BUILD_ROOT
 
 gzip -9nf $RPM_BUILD_ROOT%{_infodir}/* 
 gzip -9nf ABOUT-NLS AUTHORS NEWS BACKLOG README COPYING THANKS COPYING-LIB TODO
@@ -79,16 +76,16 @@ gzip -9nf ABOUT-NLS AUTHORS NEWS BACKLOG README COPYING THANKS COPYING-LIB TODO
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_prefix}/lib/librecode.so*
-%{_prefix}/share/locale
+#%{_prefix}/share/locale
 %doc %{_mandir}/man1/*
 %doc *.gz
+%doc %{_infodir}/*info*.gz
 
 %files devel
 %defattr(644,root,root,755)
 %{_prefix}/lib/librecode.*a*
 %{_prefix}/include/*
-%doc %{_infodir}/*info*.gz
