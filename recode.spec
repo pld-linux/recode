@@ -1,4 +1,4 @@
-# $Revision: 1.3 $ $Date: 1999-09-19 11:10:18 $
+# $Revision: 1.4 $ $Date: 1999-09-19 12:04:38 $
 Summary:	Utility for converting text between multiple character sets.
 Summary(pl):	Uniwersjalny konwerter zestawów znaków.
 Name:		recode
@@ -8,6 +8,7 @@ Copyright:	GPL
 Group:		Utilities/Text
 Group(pl):	Narzêdzia/Tekst
 Source:		http://www.iro.umontreal.ca/contrib/recode/recode-%{version}.tar.gz
+Patch0:		recode-pl.po.patch
 Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -38,36 +39,40 @@ do programów u¿ytkownika.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 autoconf
 LDFLAGS="-s" \
 CFLAGS="$RPM_OPT_FLAGS" \
-./configure \
-    --prefix=%{_prefix} \
-    --sbindir=%{_sbindir} 
+%configure 
 make
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/{bin,include,info,man/man1,lib}
-install -d $RPM_BUILD_ROOT/share/locale/{da,de,es,fr,nl,pl,pt,sl,sv}
+#install -d $RPM_BUILD_ROOT/{bin,include,info,man/man1,lib,share}
+#install -d $RPM_BUILD_ROOT/share/locale/{da,de,es,fr,nl,pl,pt,sl,sv}
 
-make install DESTDIR=$RPM_BUILD_ROOT 
+make    install \
+    LIB_PREFIX="$RPM_BUILD_ROOT%{_libdir}" \
+    BIN_PREFIX="$RPM_BUILD_ROOT%{_bindir}" \
+    INC_PREFIX="$RPM_BUILD_ROOT%{_includedir}"
 
 gzip -9nf $RPM_BUILD_ROOT%{_infodir}/* 
 gzip -9nf ABOUT-NLS AUTHORS NEWS BACKLOG README COPYING THANKS COPYING-LIB TODO
 	
 %find_lang %{name}
 
+%post -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
+
 %post devel
 /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-ldconfig
 
 %preun devel
 /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -76,11 +81,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_prefix}/lib/librecode.so*
+%{_prefix}/share/locale
 %doc %{_mandir}/man1/*
-%doc ABOUT-NLS AUTHORS NEWS BACKLOG README COPYING THANKS COPYING-LIB  TODO      
+%doc *.gz
+
 %files devel
 %defattr(644,root,root,755)
-%doc *.gz
-%{_infodir}/*info*.gz
 %{_prefix}/lib/librecode.*a*
 %{_prefix}/include/*
+%doc %{_infodir}/*info*.gz
