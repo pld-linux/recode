@@ -1,4 +1,4 @@
-# $Revision: 1.31 $ $Date: 2002-10-27 18:31:35 $
+# $Revision: 1.32 $ $Date: 2002-11-25 14:18:44 $
 Summary:	Utility for converting text between multiple character sets
 Summary(pl):	Uniwersalny konwerter miêdzy zestawami znaków
 Name:		recode
@@ -103,7 +103,7 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so
-%attr(755,root,root) %{_libdir}/lib*.la
+%{_libdir}/lib*.la
 %{_includedir}/*
 
 %files static
