@@ -1,9 +1,9 @@
-# $Revision: 1.20 $ $Date: 2001-07-26 05:42:23 $
+# $Revision: 1.21 $ $Date: 2001-10-18 21:14:51 $
 Summary:	Utility for converting text between multiple character sets
-Summary(pl):	Uniwersjalny konwerter zestawów znaków
+Summary(pl):	Uniwersalny konwerter zestawów znaków
 Name:		recode
 Version:	3.5d
-Release:	3
+Release:	4
 License:	GPL/LGPL
 Group:		Applications/Text
 Group(de):	Applikationen/Text
@@ -14,10 +14,12 @@ Patch0:		%{name}-info.patch
 Patch1:		%{name}-use_malloc_realloc.patch
 Patch2:		%{name}-am.patch
 Patch3:		%{name}-hash-nameconflict.patch
+URL:		http://www.iro.umontreal.ca/contrib/recode/HTML/
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	libtool
 BuildRequires:	flex
-URL:		http://www.iro.umontreal.ca/contrib/recode/HTML/
+Prereq:		/sbin/ldconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -35,8 +37,12 @@ Summary:	Header filess and documentations for librecode
 Summary(pl):	Pliki nag³ówkowe i dokumentacja do librecode
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
+Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
+Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
+Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name} = %{version}
 
 %description devel
@@ -50,8 +56,12 @@ Summary:	Static library librecode
 Summary(pl):	Biblioteka statyczna librecode
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
+Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
+Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(ru):	òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
+Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name}-devel = %{version}
 
 %description static
@@ -68,6 +78,7 @@ Biblioteka statyczna librecode.
 %patch3 -p1
 
 %build
+libtoolize --copy --force
 aclocal
 autoconf
 automake -a -c
@@ -83,17 +94,16 @@ gzip -9nf AUTHORS NEWS BACKLOG README THANKS TODO
 
 %find_lang %{name}
 
-%post   -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
-
-%post devel
-[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-
-%postun devel
-[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post
+/sbin/ldconfig
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+
+%postun
+/sbin/ldconfig
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
