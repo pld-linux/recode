@@ -17,8 +17,9 @@ Patch6:		%{name}-pl.po-update.patch
 URL:		http://www.gnu.org/software/recode/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
-BuildRequires:	libtool
 BuildRequires:	flex
+BuildRequires:	libtool
+BuildRequires:	texinfo
 Requires(post,postun):	/sbin/ldconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
