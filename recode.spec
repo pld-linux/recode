@@ -1,9 +1,9 @@
-# $Revision: 1.27 $ $Date: 2002-06-23 20:32:34 $
+# $Revision: 1.28 $ $Date: 2002-07-29 09:54:41 $
 Summary:	Utility for converting text between multiple character sets
-Summary(pl):	Uniwersalny konwerter zestawów znaków
+Summary(pl):	Uniwersalny konwerter miêdzy zestawami znaków
 Name:		recode
 Version:	3.5d
-Release:	4
+Release:	5
 License:	GPL/LGPL
 Group:		Applications/Text
 Source0:	http://www.iro.umontreal.ca/contrib/recode/%{name}-%{version}.tar.gz
@@ -11,12 +11,13 @@ Patch0:		%{name}-info.patch
 Patch1:		%{name}-use_malloc_realloc.patch
 Patch2:		%{name}-am.patch
 Patch3:		%{name}-hash-nameconflict.patch
+Patch4:		%{name}-ac25x.patch
 URL:		http://www.iro.umontreal.ca/contrib/recode/HTML/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	flex
-Prereq:		/sbin/ldconfig
+Requires(post,postun):	/sbin/ldconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -25,30 +26,30 @@ surfaces. It supports more than 200 different character sets and
 surfaces, including well known ISO-8859, CP-XXXX and Unicode.
 
 %description -l pl
-Program `recode' konwertuje zestawy znaków oraz kodowanie w plikach
-tekstowych. Obs³uguje ponad 200 ró¿nych zestawów znaków oraz sposobów
-kodowania, w³acznie z popularnymi ISO-8859, CP-XXXX oraz Unicode.
+Program `recode' konwertuje pliki pomiêdzy ró¿nymi zestawami znaków i
+kodowaniami. Obs³uguje ponad 200 ró¿nych zestawów znaków oraz sposobów
+kodowania, w³±cznie z popularnymi ISO-8859, CP-XXXX oraz Unicode.
 
 %package devel
-Summary:	Header filess and documentations for librecode
+Summary:	Header files and documentations for librecode
 Summary(pl):	Pliki nag³ówkowe i dokumentacja do librecode
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
 
 %description devel
-Header filess and documentations for librecode.
+Header files and documentations for librecode.
 
 %description devel -l pl
 Pliki nag³ówkowe i dokumentacja do librecode.
 
 %package static
-Summary:	Static library librecode
+Summary:	Static librecode library
 Summary(pl):	Biblioteka statyczna librecode
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}
 
 %description static
-Static library librecode.
+Static librecode library.
 
 %description static -l pl
 Biblioteka statyczna librecode.
@@ -59,6 +60,7 @@ Biblioteka statyczna librecode.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__libtoolize}
@@ -72,8 +74,6 @@ aclocal
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
-
-gzip -9nf AUTHORS NEWS BACKLOG README THANKS TODO
 
 %find_lang %{name}
 
@@ -90,7 +90,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc *.gz
+%doc AUTHORS NEWS BACKLOG README THANKS TODO
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 %{_infodir}/*info*
