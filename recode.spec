@@ -1,9 +1,9 @@
-# $Revision: 1.7 $ $Date: 1999-09-21 07:08:59 $
+# $Revision: 1.8 $ $Date: 1999-09-24 10:45:03 $
 Summary:	Utility for converting text between multiple character sets
 Summary(pl):	Uniwersjalny konwerter zestawów znaków
 Name:		recode
 Version:	3.5
-Release:	1
+Release:	2
 Copyright:	GPL/LGPL
 Group:		Utilities/Text
 Group(pl):	Narzêdzia/Tekst
@@ -80,7 +80,7 @@ gzip -9nf $RPM_BUILD_ROOT{%{_infodir}/*,%{_mandir}/man1/*} \
 %post devel
 /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
-%preun devel
+%postun devel
 /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %clean
