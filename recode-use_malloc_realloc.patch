@@ -1,0 +1,72 @@
+diff -Nru recode-3.5d/src/Makefile.am recode-3.5d.new/src/Makefile.am
+--- recode-3.5d/src/Makefile.am	Wed Jun 28 12:32:17 2000
++++ recode-3.5d.new/src/Makefile.am	Tue Oct 24 03:17:03 2000
+@@ -43,7 +43,7 @@
+ L_SURFACES =
+ 
+ recode_SOURCES = main.c freeze.c mixed.c
+-recode_LDADD = librecode.la ../lib/libreco.a
++recode_LDADD = librecode.la
+ 
+ librecode_la_SOURCES = argmatch.c charname.c combine.c fr-charname.c \
+ hash.c iconv.c libiconv.c merged.c names.c outer.c quotearg.c recode.c \
+diff -Nru recode-3.5d/src/main.c recode-3.5d.new/src/main.c
+--- recode-3.5d/src/main.c	Tue Jun 27 18:51:18 2000
++++ recode-3.5d.new/src/main.c	Tue Oct 24 03:17:27 2000
+@@ -513,7 +513,7 @@
+ 	    unsigned counter;
+ 
+ 	    header_name++;
+-	    buffer = (char *) xmalloc ((size_t) (header_name - optarg));
++	    buffer = (char *) malloc ((size_t) (header_name - optarg));
+ 	    if (*header_name == NUL)
+ 	      header_name = NULL;
+ 	    for (counter = 0; optarg[counter] != '/'; counter++)
+@@ -783,7 +783,7 @@
+ 	if (!*cursor)
+ 	  {
+ 	    char *rewritten_request = (char *)
+-	      xmalloc (strlen (user_request) + 2);
++	      malloc (strlen (user_request) + 2);
+ 	    char *cursor2 = rewritten_request;
+ 
+ 	    for (cursor = user_request; *cursor != ':'; cursor++)
+diff -Nru recode-3.5d/src/quotearg.c recode-3.5d.new/src/quotearg.c
+--- recode-3.5d/src/quotearg.c	Sun Aug 22 13:04:17 1999
++++ recode-3.5d.new/src/quotearg.c	Tue Oct 24 03:16:29 2000
+@@ -25,7 +25,7 @@
+ 
+ #include <sys/types.h>
+ #include <quotearg.h>
+-#include <xalloc.h>
++#include <stdlib.h>
+ 
+ #include <ctype.h>
+ #if defined (STDC_HEADERS) || (!defined (isascii) && !defined (HAVE_ISASCII))
+@@ -110,7 +110,7 @@
+ clone_quoting_options (struct quoting_options *o)
+ {
+   struct quoting_options *p
+-    = (struct quoting_options *) xmalloc (sizeof (struct quoting_options));
++    = (struct quoting_options *) malloc (sizeof (struct quoting_options));
+   *p = *(o ? o : &default_quoting_options);
+   return p;
+ }
+@@ -339,7 +339,7 @@
+       size_t s = n1 * sizeof (struct slotvec);
+       if (! (0 < n1 && n1 == s / sizeof (struct slotvec)))
+ 	abort ();
+-      slotvec = (struct slotvec *) xrealloc (slotvec, s);
++      slotvec = (struct slotvec *) realloc (slotvec, s);
+       memset (slotvec + nslots, 0, (n1 - nslots) * sizeof (struct slotvec));
+       nslots = n;
+     }
+@@ -352,7 +352,7 @@
+     if (size <= qsize)
+       {
+ 	slotvec[n].size = size = qsize + 1;
+-	slotvec[n].val = val = xrealloc (val, size);
++	slotvec[n].val = val = realloc (val, size);
+ 	quotearg_buffer (val, size, arg, (size_t) -1, options);
+       }
+ 
