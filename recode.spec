@@ -1,4 +1,4 @@
-# $Revision: 1.33 $ $Date: 2003-05-25 06:26:17 $
+# $Revision: 1.34 $ $Date: 2003-05-25 11:00:58 $
 Summary:	Utility for converting text between multiple character sets
 Summary(pl):	Uniwersalny konwerter miêdzy zestawami znaków
 Name:		recode
@@ -7,6 +7,7 @@ Release:	1
 License:	GPL/LGPL
 Group:		Applications/Text
 Source0:	ftp://ftp.gnu.org/gnu/recode/%{name}-%{version}.tar.gz
+# Source0-md5: be3f40ad2e93dae5cd5f628264bf1877
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-use_malloc_realloc.patch
 Patch2:		%{name}-am.patch
