@@ -1,4 +1,4 @@
-# $Revision: 1.32 $ $Date: 2002-11-25 14:18:44 $
+# $Revision: 1.33 $ $Date: 2003-05-25 06:26:17 $
 Summary:	Utility for converting text between multiple character sets
 Summary(pl):	Uniwersalny konwerter miêdzy zestawami znaków
 Name:		recode
