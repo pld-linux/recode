@@ -1,13 +1,14 @@
-# $Revision: 1.11 $ $Date: 2000-05-01 20:11:41 $
+# $Revision: 1.12 $ $Date: 2000-05-15 23:28:58 $
 Summary:	Utility for converting text between multiple character sets
 Summary(pl):	Uniwersjalny konwerter zestawów znaków
 Name:		recode
 Version:	3.5
-Release:	2
-Copyright:	GPL/LGPL
+Release:	3
+License:	GPL/LGPL
 Group:		Utilities/Text
+Group(fr):	Utilitaires/Texte
 Group(pl):	Narzêdzia/Tekst
-Source:		http://www.iro.umontreal.ca/contrib/recode/recode-%{version}.tar.gz
+Source0:	http://www.iro.umontreal.ca/contrib/recode/%{name}-%{version}.tar.gz
 Patch0:		recode-pl.po.patch
 Patch1:		recode-install.patch
 BuildRequires:	gettext-devel
@@ -19,14 +20,15 @@ It supports more than 200 different character sets and surfaces, including
 well known ISO-8859, CP-XXXX and Unicode.
 
 %description -l pl
-Program `recode' konwertuje zestawy znaków oraz kodowanie w plikach tekstowych.
-Obs³uguje ponad 200 ró¿nych zestawów znaków oraz sposobów kodowania,
-w³acznie z popularnymi ISO-8859, CP-XXXX oraz Unicode.
+Program `recode' konwertuje zestawy znaków oraz kodowanie w plikach
+tekstowych. Obs³uguje ponad 200 ró¿nych zestawów znaków oraz sposobów
+kodowania, w³acznie z popularnymi ISO-8859, CP-XXXX oraz Unicode.
 
 %package devel
 Summary:	Header filess and documentations for librecode
 Summary(pl):	Pliki nag³ówkowe i dokumentacja do librecode
 Group:		Development/Libraries
+Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
 Requires:	%{name} = %{version}
 
@@ -40,6 +42,7 @@ Pliki nag³ówkowe i dokumentacja do librecode.
 Summary:	Static library librecode
 Summary(pl):	Biblioteka statyczna librecode
 Group:		Development/Libraries
+Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
 Requires:	%{name}-devel = %{version}
 
