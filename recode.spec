@@ -1,9 +1,9 @@
-# $Revision: 1.17 $ $Date: 2000-10-24 01:38:49 $
+# $Revision: 1.18 $ $Date: 2001-03-16 18:04:11 $
 Summary:	Utility for converting text between multiple character sets
 Summary(pl):	Uniwersjalny konwerter zestawów znaków
 Name:		recode
 Version:	3.5d
-Release:	2
+Release:	3
 License:	GPL/LGPL
 Group:		Applications/Text
 Group(de):	Applikationen/Text
@@ -12,6 +12,9 @@ Group(pl):	Aplikacje/Tekst
 Source0:	http://www.iro.umontreal.ca/contrib/recode/%{name}-%{version}.tar.gz
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-use_malloc_realloc.patch
+Patch2:		%{name}-am.patch
+Patch3:		%{name}-hash-nameconflict.patch
+BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	flex
 URL:		http://www.iro.umontreal.ca/contrib/recode/HTML/
@@ -61,9 +64,13 @@ Biblioteka statyczna librecode.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
-automake
+aclocal
+autoconf
+automake -a -c
 %configure 
 %{__make}
 
