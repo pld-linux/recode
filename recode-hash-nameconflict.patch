@@ -1,12 +1,12 @@
-diff -Nur recode-3.5d.orig/src/combine.c recode-3.5d/src/combine.c
---- recode-3.5d.orig/src/combine.c	Wed Jun 28 20:40:16 2000
-+++ recode-3.5d/src/combine.c	Fri Mar 16 04:44:34 2001
+diff -Nur recode-3.6.orig/src/combine.c recode-3.6/src/combine.c
+--- recode-3.6.orig/src/combine.c	Sat Jul  1 21:08:35 2000
++++ recode-3.6/src/combine.c	Sun Oct 27 12:01:29 2002
 @@ -91,7 +91,7 @@
    if (before_options || after_options)
      return false;
  
 -  table = hash_initialize (0, NULL, combined_hash, combined_compare, NULL);
-+  table = recode_hash_initialize (0, NULL, combined_hash, combined_compare, NULL);
++  table = _recode_hash_initialize (0, NULL, combined_hash, combined_compare, NULL);
  
    if (!table)
      return false;
@@ -15,7 +15,7 @@ diff -Nur recode-3.5d.orig/src/combine.c recode-3.5d/src/combine.c
    while (*data != DONE)
      {
 -      if (!hash_insert (table, data))
-+      if (!recode_hash_insert (table, data))
++      if (!_recode_hash_insert (table, data))
  	return false;
  
        while (*data != DONE)
@@ -24,7 +24,7 @@ diff -Nur recode-3.5d.orig/src/combine.c recode-3.5d/src/combine.c
      {
        unsigned short lookup = value;
 -      unsigned short *result = hash_lookup (table, &lookup);
-+      unsigned short *result = recode_hash_lookup (table, &lookup);
++      unsigned short *result = _recode_hash_lookup (table, &lookup);
  
        if (result)
  	{
@@ -33,7 +33,7 @@ diff -Nur recode-3.5d.orig/src/combine.c recode-3.5d/src/combine.c
      {
        unsigned short lookup = value;
 -      unsigned short *result = hash_lookup (table, &lookup);
-+      unsigned short *result = recode_hash_lookup (table, &lookup);
++      unsigned short *result = _recode_hash_lookup (table, &lookup);
  
        if (result)
  	{
@@ -42,7 +42,7 @@ diff -Nur recode-3.5d.orig/src/combine.c recode-3.5d/src/combine.c
  	{
  	  unsigned short lookup = value;
 -	  unsigned short *result = hash_lookup (table, &lookup);
-+	  unsigned short *result = recode_hash_lookup (table, &lookup);
++	  unsigned short *result = _recode_hash_lookup (table, &lookup);
  
  	  if (result)
  	    {
@@ -51,217 +51,217 @@ diff -Nur recode-3.5d.orig/src/combine.c recode-3.5d/src/combine.c
  	{
  	  unsigned short lookup = value;
 -	  unsigned short *result = hash_lookup (table, &lookup);
-+	  unsigned short *result = recode_hash_lookup (table, &lookup);
++	  unsigned short *result = _recode_hash_lookup (table, &lookup);
  
  	  if (result)
  	    {
-@@ -310,7 +310,7 @@
+@@ -325,7 +325,7 @@
        struct state lookup;
  
        lookup.character = character;
 -      state = hash_lookup (table, &lookup);
-+      state = recode_hash_lookup (table, &lookup);
++      state = _recode_hash_lookup (table, &lookup);
        if (!state)
  	{
  	  if (state= (struct state *) malloc (sizeof (struct state)), !state)
-@@ -322,7 +322,7 @@
+@@ -337,7 +337,7 @@
  	  state->unshift = NULL;
  	  state->next = NULL;
  
 -	  if (!hash_insert (table, state))
-+	  if (!recode_hash_insert (table, state))
++	  if (!_recode_hash_insert (table, state))
  	    return NULL;
  	}
        return state;
-@@ -351,7 +351,7 @@
+@@ -366,7 +366,7 @@
        struct state lookup;
  
        lookup.character = character;
 -      return hash_lookup (table, &lookup);
-+      return recode_hash_lookup (table, &lookup);
++      return _recode_hash_lookup (table, &lookup);
      }
  }
  
-@@ -367,7 +367,7 @@
+@@ -382,7 +382,7 @@
    if (before_options || after_options)
      return false;
  
--  table = hash_initialize (0, NULL, state_hash, state_compare, NULL);
-+  table = recode_hash_initialize (0, NULL, state_hash, state_compare, NULL);
+-  table = hash_initialize (0, NULL, state_hash, state_compare, state_free);
++  table = _recode_hash_initialize (0, NULL, state_hash, state_compare, state_free);
  
    if (!table)
      return false;
-diff -Nur recode-3.5d.orig/src/hash.c recode-3.5d/src/hash.c
---- recode-3.5d.orig/src/hash.c	Mon Jan 10 01:24:59 2000
-+++ recode-3.5d/src/hash.c	Fri Mar 16 04:44:34 2001
-@@ -118,7 +118,7 @@
+diff -Nur recode-3.6.orig/src/hash.c recode-3.6/src/hash.c
+--- recode-3.6.orig/src/hash.c	Mon Jan 22 17:55:31 2001
++++ recode-3.6/src/hash.c	Sun Oct 27 12:01:29 2002
+@@ -116,7 +116,7 @@
     the same quantity.  */
  
  unsigned
 -hash_get_n_buckets (const Hash_table *table)
-+recode_hash_get_n_buckets (const Hash_table *table)
++_recode_hash_get_n_buckets (const Hash_table *table)
  {
    return table->n_buckets;
  }
-@@ -126,7 +126,7 @@
+@@ -124,7 +124,7 @@
  /* Return the number of slots in use (non-empty buckets).  */
  
  unsigned
 -hash_get_n_buckets_used (const Hash_table *table)
-+recode_hash_get_n_buckets_used (const Hash_table *table)
++_recode_hash_get_n_buckets_used (const Hash_table *table)
  {
    return table->n_buckets_used;
  }
-@@ -134,7 +134,7 @@
+@@ -132,7 +132,7 @@
  /* Return the number of active entries.  */
  
  unsigned
 -hash_get_n_entries (const Hash_table *table)
-+recode_hash_get_n_entries (const Hash_table *table)
++_recode_hash_get_n_entries (const Hash_table *table)
  {
    return table->n_entries;
  }
-@@ -142,7 +142,7 @@
+@@ -140,7 +140,7 @@
  /* Return the length of the longest chain (bucket).  */
  
  unsigned
 -hash_get_max_bucket_length (const Hash_table *table)
-+recode_hash_get_max_bucket_length (const Hash_table *table)
++_recode_hash_get_max_bucket_length (const Hash_table *table)
  {
    struct hash_entry *bucket;
    unsigned max_bucket_length = 0;
-@@ -169,7 +169,7 @@
+@@ -167,7 +167,7 @@
     statistics.  */
  
  bool
 -hash_table_ok (const Hash_table *table)
-+recode_hash_table_ok (const Hash_table *table)
++_recode_hash_table_ok (const Hash_table *table)
  {
    struct hash_entry *bucket;
    unsigned n_buckets_used = 0;
-@@ -198,12 +198,12 @@
+@@ -196,12 +196,12 @@
  }
  
  void
 -hash_print_statistics (const Hash_table *table, FILE *stream)
-+recode_hash_print_statistics (const Hash_table *table, FILE *stream)
++_recode_hash_print_statistics (const Hash_table *table, FILE *stream)
  {
 -  unsigned n_entries = hash_get_n_entries (table);
 -  unsigned n_buckets = hash_get_n_buckets (table);
 -  unsigned n_buckets_used = hash_get_n_buckets_used (table);
 -  unsigned max_bucket_length = hash_get_max_bucket_length (table);
-+  unsigned n_entries = recode_hash_get_n_entries (table);
-+  unsigned n_buckets = recode_hash_get_n_buckets (table);
-+  unsigned n_buckets_used = recode_hash_get_n_buckets_used (table);
-+  unsigned max_bucket_length = recode_hash_get_max_bucket_length (table);
++  unsigned n_entries = _recode_hash_get_n_entries (table);
++  unsigned n_buckets = _recode_hash_get_n_buckets (table);
++  unsigned n_buckets_used = _recode_hash_get_n_buckets_used (table);
++  unsigned max_bucket_length = _recode_hash_get_max_bucket_length (table);
  
    fprintf (stream, "# entries:         %u\n", n_entries);
    fprintf (stream, "# buckets:         %u\n", n_buckets);
-@@ -216,7 +216,7 @@
+@@ -214,7 +214,7 @@
     entry from the table.  Otherwise, return NULL.  */
  
  void *
 -hash_lookup (const Hash_table *table, const void *entry)
-+recode_hash_lookup (const Hash_table *table, const void *entry)
++_recode_hash_lookup (const Hash_table *table, const void *entry)
  {
    struct hash_entry *bucket
      = table->bucket + table->hasher (entry, table->n_buckets);
-@@ -244,7 +244,7 @@
+@@ -242,7 +242,7 @@
  /* Return the first data in the table, or NULL if the table is empty.  */
  
  void *
 -hash_get_first (const Hash_table *table)
-+recode_hash_get_first (const Hash_table *table)
++_recode_hash_get_first (const Hash_table *table)
  {
    struct hash_entry *bucket;
  
-@@ -263,7 +263,7 @@
+@@ -261,7 +261,7 @@
     Return NULL if there is no more entries.  */
  
  void *
 -hash_get_next (const Hash_table *table, const void *entry)
-+recode_hash_get_next (const Hash_table *table, const void *entry)
++_recode_hash_get_next (const Hash_table *table, const void *entry)
  {
    struct hash_entry *bucket
      = table->bucket + table->hasher (entry, table->n_buckets);
-@@ -290,7 +290,7 @@
+@@ -288,7 +288,7 @@
     pointers.  */
  
  unsigned
 -hash_get_entries (const Hash_table *table, void **buffer,
-+recode_hash_get_entries (const Hash_table *table, void **buffer,
++_recode_hash_get_entries (const Hash_table *table, void **buffer,
  		  unsigned buffer_size)
  {
    unsigned counter = 0;
-@@ -322,7 +322,7 @@
+@@ -320,7 +320,7 @@
     returns nonzero.  When it returns zero, the walking is interrupted.  */
  
  unsigned
 -hash_do_for_each (const Hash_table *table, Hash_processor processor,
-+recode_hash_do_for_each (const Hash_table *table, Hash_processor processor,
++_recode_hash_do_for_each (const Hash_table *table, Hash_processor processor,
  		  void *processor_data)
  {
    unsigned counter = 0;
-@@ -359,7 +359,7 @@
+@@ -357,7 +357,7 @@
     may not be good for your application."  */
  
  unsigned
 -hash_string (const char *string, unsigned n_buckets)
-+recode_hash_string (const char *string, unsigned n_buckets)
++_recode_hash_string (const char *string, unsigned n_buckets)
  {
  # ifndef CHAR_BIT
  #  define CHAR_BIT 8
-@@ -387,7 +387,7 @@
+@@ -385,7 +385,7 @@
     (By the way, what happened to this excellent man?  Is he still alive?)  */
  
  unsigned
 -hash_string (const char *string, unsigned n_buckets)
-+recode_hash_string (const char *string, unsigned n_buckets)
++_recode_hash_string (const char *string, unsigned n_buckets)
  {
    unsigned value = 0;
  
-@@ -438,7 +438,7 @@
+@@ -436,7 +436,7 @@
  }
  
  void
 -hash_reset_tuning (Hash_tuning *tuning)
-+recode_hash_reset_tuning (Hash_tuning *tuning)
++_recode_hash_reset_tuning (Hash_tuning *tuning)
  {
    *tuning = default_tuning;
  }
-@@ -500,7 +500,7 @@
+@@ -498,7 +498,7 @@
     values.  */
  
  Hash_table *
 -hash_initialize (unsigned candidate, const Hash_tuning *tuning,
-+recode_hash_initialize (unsigned candidate, const Hash_tuning *tuning,
++_recode_hash_initialize (unsigned candidate, const Hash_tuning *tuning,
  		 Hash_hasher hasher, Hash_comparator comparator,
  		 Hash_data_freer data_freer)
  {
-@@ -565,7 +565,7 @@
+@@ -563,7 +563,7 @@
     affected entries.  */
  
  void
 -hash_clear (Hash_table *table)
-+recode_hash_clear (Hash_table *table)
++_recode_hash_clear (Hash_table *table)
  {
    struct hash_entry *bucket;
    struct hash_entry *cursor;
-@@ -605,7 +605,7 @@
+@@ -603,7 +603,7 @@
     entry.  */
  
  void
 -hash_free (Hash_table *table)
-+recode_hash_free (Hash_table *table)
++_recode_hash_free (Hash_table *table)
  {
    struct hash_entry *bucket;
    struct hash_entry *cursor;
-@@ -775,14 +775,14 @@
+@@ -773,14 +773,14 @@
     exact number of buckets desired.  */
  
  bool
 -hash_rehash (Hash_table *table, unsigned candidate)
-+recode_hash_rehash (Hash_table *table, unsigned candidate)
++_recode_hash_rehash (Hash_table *table, unsigned candidate)
  {
    Hash_table *new_table;
    struct hash_entry *bucket;
@@ -269,58 +269,58 @@ diff -Nur recode-3.5d.orig/src/hash.c recode-3.5d/src/hash.c
    struct hash_entry *next;
  
 -  new_table = hash_initialize (candidate, table->tuning, table->hasher,
-+  new_table = recode_hash_initialize (candidate, table->tuning, table->hasher,
++  new_table = _recode_hash_initialize (candidate, table->tuning, table->hasher,
  			       table->comparator, table->data_freer);
    if (new_table == NULL)
      return false;
-@@ -861,7 +861,7 @@
+@@ -859,7 +859,7 @@
     Return NULL if the storage required for insertion cannot be allocated.  */
  
  void *
 -hash_insert (Hash_table *table, const void *entry)
-+recode_hash_insert (Hash_table *table, const void *entry)
++_recode_hash_insert (Hash_table *table, const void *entry)
  {
    void *data;
    struct hash_entry *bucket;
-@@ -918,7 +918,7 @@
+@@ -916,7 +916,7 @@
  			     * tuning->growth_threshold));
  
  	  /* If the rehash fails, arrange to return NULL.  */
 -	  if (!hash_rehash (table, candidate))
-+	  if (!recode_hash_rehash (table, candidate))
++	  if (!_recode_hash_rehash (table, candidate))
  	    entry = NULL;
  	}
      }
-@@ -931,7 +931,7 @@
+@@ -929,7 +929,7 @@
     table, don't modify the table and return NULL.  */
  
  void *
 -hash_delete (Hash_table *table, const void *entry)
-+recode_hash_delete (Hash_table *table, const void *entry)
++_recode_hash_delete (Hash_table *table, const void *entry)
  {
    void *data;
    struct hash_entry *bucket;
-@@ -963,7 +963,7 @@
+@@ -961,7 +961,7 @@
  			      : (table->n_buckets * tuning->shrink_factor
  				 * tuning->growth_threshold));
  
 -	      hash_rehash (table, candidate);
-+	      recode_hash_rehash (table, candidate);
++	      _recode_hash_rehash (table, candidate);
  	    }
  	}
      }
-@@ -976,7 +976,7 @@
+@@ -974,7 +974,7 @@
  #if TESTING
  
  void
 -hash_print (const Hash_table *table)
-+recode_hash_print (const Hash_table *table)
++_recode_hash_print (const Hash_table *table)
  {
    struct hash_entry *bucket;
  
-diff -Nur recode-3.5d.orig/src/hash.h recode-3.5d/src/hash.h
---- recode-3.5d.orig/src/hash.h	Mon Mar 15 16:33:03 1999
-+++ recode-3.5d/src/hash.h	Fri Mar 16 04:44:34 2001
+diff -Nur recode-3.6.orig/src/hash.h recode-3.6/src/hash.h
+--- recode-3.6.orig/src/hash.h	Thu Aug  3 03:21:15 2000
++++ recode-3.6/src/hash.h	Sun Oct 27 12:01:29 2002
 @@ -91,30 +91,30 @@
  typedef struct hash_table Hash_table;
  
@@ -332,54 +332,54 @@ diff -Nur recode-3.5d.orig/src/hash.h recode-3.5d/src/hash.h
 -bool hash_table_ok PARAMS ((const Hash_table *));
 -void hash_print_statistics PARAMS ((const Hash_table *, FILE *));
 -void *hash_lookup PARAMS ((const Hash_table *, const void *));
-+unsigned recode_hash_get_n_buckets PARAMS ((const Hash_table *));
-+unsigned recode_hash_get_n_buckets_used PARAMS ((const Hash_table *));
-+unsigned recode_hash_get_n_entries PARAMS ((const Hash_table *));
-+unsigned recode_hash_get_max_bucket_length PARAMS ((const Hash_table *));
-+bool recode_hash_table_ok PARAMS ((const Hash_table *));
-+void recode_hash_print_statistics PARAMS ((const Hash_table *, FILE *));
-+void *recode_hash_lookup PARAMS ((const Hash_table *, const void *));
++unsigned _recode_hash_get_n_buckets PARAMS ((const Hash_table *));
++unsigned _recode_hash_get_n_buckets_used PARAMS ((const Hash_table *));
++unsigned _recode_hash_get_n_entries PARAMS ((const Hash_table *));
++unsigned _recode_hash_get_max_bucket_length PARAMS ((const Hash_table *));
++bool _recode_hash_table_ok PARAMS ((const Hash_table *));
++void _recode_hash_print_statistics PARAMS ((const Hash_table *, FILE *));
++void *_recode_hash_lookup PARAMS ((const Hash_table *, const void *));
  
  /* Walking.  */
 -void *hash_get_first PARAMS ((const Hash_table *));
 -void *hash_get_next PARAMS ((const Hash_table *, const void *));
 -unsigned hash_get_entries PARAMS ((const Hash_table *, void **, unsigned));
 -unsigned hash_do_for_each PARAMS ((const Hash_table *, Hash_processor, void *));
-+void *recode_hash_get_first PARAMS ((const Hash_table *));
-+void *recode_hash_get_next PARAMS ((const Hash_table *, const void *));
-+unsigned recode_hash_get_entries PARAMS ((const Hash_table *, void **, unsigned));
-+unsigned recode_hash_do_for_each PARAMS ((const Hash_table *, Hash_processor, void *));
++void *_recode_hash_get_first PARAMS ((const Hash_table *));
++void *_recode_hash_get_next PARAMS ((const Hash_table *, const void *));
++unsigned _recode_hash_get_entries PARAMS ((const Hash_table *, void **, unsigned));
++unsigned _recode_hash_do_for_each PARAMS ((const Hash_table *, Hash_processor, void *));
  
  /* Allocation and clean-up.  */
 -unsigned hash_string PARAMS ((const char *, unsigned));
 -void hash_reset_tuning PARAMS ((Hash_tuning *));
 -Hash_table *hash_initialize PARAMS ((unsigned, const Hash_tuning *,
-+unsigned recode_hash_string PARAMS ((const char *, unsigned));
-+void recode_hash_reset_tuning PARAMS ((Hash_tuning *));
-+Hash_table *recode_hash_initialize PARAMS ((unsigned, const Hash_tuning *,
++unsigned _recode_hash_string PARAMS ((const char *, unsigned));
++void _recode_hash_reset_tuning PARAMS ((Hash_tuning *));
++Hash_table *_recode_hash_initialize PARAMS ((unsigned, const Hash_tuning *,
  				     Hash_hasher, Hash_comparator,
  				     Hash_data_freer));
 -void hash_clear PARAMS ((Hash_table *));
 -void hash_free PARAMS ((Hash_table *));
-+void recode_hash_clear PARAMS ((Hash_table *));
-+void recode_hash_free PARAMS ((Hash_table *));
++void _recode_hash_clear PARAMS ((Hash_table *));
++void _recode_hash_free PARAMS ((Hash_table *));
  
  /* Insertion and deletion.  */
 -bool hash_rehash PARAMS ((Hash_table *, unsigned));
 -void *hash_insert PARAMS ((Hash_table *, const void *));
 -void *hash_delete PARAMS ((Hash_table *, const void *));
-+bool recode_hash_rehash PARAMS ((Hash_table *, unsigned));
-+void *recode_hash_insert PARAMS ((Hash_table *, const void *));
-+void *recode_hash_delete PARAMS ((Hash_table *, const void *));
-diff -Nur recode-3.5d.orig/src/html.c recode-3.5d/src/html.c
---- recode-3.5d.orig/src/html.c	Wed Jun 28 20:40:25 2000
-+++ recode-3.5d/src/html.c	Fri Mar 16 04:44:34 2001
-@@ -423,14 +423,14 @@
++bool _recode_hash_rehash PARAMS ((Hash_table *, unsigned));
++void *_recode_hash_insert PARAMS ((Hash_table *, const void *));
++void *_recode_hash_delete PARAMS ((Hash_table *, const void *));
+diff -Nur recode-3.6.orig/src/html.c recode-3.6/src/html.c
+--- recode-3.6.orig/src/html.c	Fri Aug 18 23:34:28 2000
++++ recode-3.6/src/html.c	Sun Oct 27 12:01:29 2002
+@@ -425,14 +425,14 @@
    if (before_options || after_options)
      return false;
  
 -  table = hash_initialize (0, NULL, code_hash, code_compare, NULL);
-+  table = recode_hash_initialize (0, NULL, code_hash, code_compare, NULL);
++  table = _recode_hash_initialize (0, NULL, code_hash, code_compare, NULL);
    if (!table)
      return false;
  
@@ -387,34 +387,34 @@ diff -Nur recode-3.5d.orig/src/html.c recode-3.5d/src/html.c
      if (cursor->flags & mask
  	&& (!request->diacritics_only || cursor->code > 128))
 -      if (!hash_insert (table, cursor))
-+      if (!recode_hash_insert (table, cursor))
++      if (!_recode_hash_insert (table, cursor))
  	return false;
  
    step->step_type = RECODE_UCS2_TO_STRING;
-@@ -504,7 +504,7 @@
+@@ -516,7 +516,7 @@
        struct ucs2_to_string *entry;
  
        lookup.code = value;
 -      entry = hash_lookup (table, &lookup);
-+      entry = recode_hash_lookup (table, &lookup);
++      entry = _recode_hash_lookup (table, &lookup);
        if (entry)
  	{
  	  const char *cursor = entry->string;
-@@ -559,7 +559,7 @@
+@@ -573,7 +573,7 @@
  {
    struct ucs2_to_string const *data = void_data;
  
 -  return hash_string (data->string, table_size);
-+  return recode_hash_string (data->string, table_size);
++  return _recode_hash_string (data->string, table_size);
  }
  
  /*----------------------------------------.
-@@ -592,14 +592,14 @@
+@@ -606,14 +606,14 @@
    if (before_options || after_options)
      return false;
  
 -  table = hash_initialize (0, NULL, string_hash, string_compare, NULL);
-+  table = recode_hash_initialize (0, NULL, string_hash, string_compare, NULL);
++  table = _recode_hash_initialize (0, NULL, string_hash, string_compare, NULL);
    if (!table)
      return false;
  
@@ -422,28 +422,28 @@ diff -Nur recode-3.5d.orig/src/html.c recode-3.5d/src/html.c
      if (cursor->flags & mask
  	&& (!request->diacritics_only || cursor->code > 128))
 -      if (!hash_insert (table, cursor))
-+      if (!recode_hash_insert (table, cursor))
++      if (!_recode_hash_insert (table, cursor))
  	return false;
  
    step->step_type = RECODE_STRING_TO_UCS2;
-@@ -801,7 +801,7 @@
+@@ -825,7 +825,7 @@
  		struct ucs2_to_string *entry;
  
  		lookup.string = buffer;
 -		entry = hash_lookup (subtask->step->step_table, &lookup);
-+		entry = recode_hash_lookup (subtask->step->step_table, &lookup);
++		entry = _recode_hash_lookup (subtask->step->step_table, &lookup);
  		if (entry)
  		  {
  		    put_ucs2 (entry->code, subtask);
-diff -Nur recode-3.5d.orig/src/names.c recode-3.5d/src/names.c
---- recode-3.5d.orig/src/names.c	Wed Jun 28 20:40:17 2000
-+++ recode-3.5d/src/names.c	Fri Mar 16 04:44:34 2001
+diff -Nur recode-3.6.orig/src/names.c recode-3.6/src/names.c
+--- recode-3.6.orig/src/names.c	Wed Dec  6 20:41:29 2000
++++ recode-3.6/src/names.c	Sun Oct 27 12:01:29 2002
 @@ -89,7 +89,7 @@
  {
    RECODE_CONST_ALIAS alias = void_alias;
  
 -  return hash_string (alias->name, limit);
-+  return recode_hash_string (alias->name, limit);
++  return _recode_hash_string (alias->name, limit);
  }
  
  static bool
@@ -451,172 +451,207 @@ diff -Nur recode-3.5d.orig/src/names.c recode-3.5d/src/names.c
    outer->number_of_symbols = 0;
  
    outer->alias_table
--    = hash_initialize (800, NULL, alias_hasher, alias_comparator, NULL);
-+    = recode_hash_initialize (800, NULL, alias_hasher, alias_comparator, NULL);
+-    = hash_initialize (800, NULL, alias_hasher, alias_comparator, free);
++    = _recode_hash_initialize (800, NULL, alias_hasher, alias_comparator, free);
    if (!outer->alias_table)
      return false;
  
-@@ -276,7 +276,7 @@
+@@ -270,7 +270,7 @@
    lookup.name = name;
    if (!lookup.name)
      return NULL;
 -  if (alias = hash_lookup (outer->alias_table, &lookup), alias)
-+  if (alias = recode_hash_lookup (outer->alias_table, &lookup), alias)
++  if (alias = _recode_hash_lookup (outer->alias_table, &lookup), alias)
      return alias;
  
    /* If we reach this point, find_type is necessarily one of SYMBOL_CREATE_*.
-@@ -302,7 +302,7 @@
+@@ -296,7 +296,7 @@
    alias->name = name;
    alias->symbol = symbol;
    alias->implied_surfaces = NULL;
 -  if (!hash_insert (outer->alias_table, alias))
-+  if (!recode_hash_insert (outer->alias_table, alias))
++  if (!_recode_hash_insert (outer->alias_table, alias))
      {
        free (symbol);
        free (alias);
-@@ -334,7 +334,7 @@
+@@ -328,7 +328,7 @@
    symbol = alias->symbol;
  
    lookup.name = name;
 -  if (alias = hash_lookup (outer->alias_table, &lookup), alias)
-+  if (alias = recode_hash_lookup (outer->alias_table, &lookup), alias)
++  if (alias = _recode_hash_lookup (outer->alias_table, &lookup), alias)
      {
        if (alias->symbol == symbol)
  	return alias;
-@@ -350,7 +350,7 @@
+@@ -344,7 +344,7 @@
    alias->name = name;
    alias->symbol = symbol;
    alias->implied_surfaces = NULL;
 -  if (!hash_insert (outer->alias_table, alias))
-+  if (!recode_hash_insert (outer->alias_table, alias))
++  if (!_recode_hash_insert (outer->alias_table, alias))
      {
        free (alias);
        return NULL;
-@@ -452,7 +452,7 @@
+@@ -446,7 +446,7 @@
    struct make_argmatch_walk walk; /* wanderer's data */
  
  #if HASH_STATS
 -  hash_print_statistics (outer->alias_table, stderr);
-+  recode_hash_print_statistics (outer->alias_table, stderr);
++  _recode_hash_print_statistics (outer->alias_table, stderr);
  #endif
  
    /* It may happen that new modules are added only once all initialisation
-@@ -474,7 +474,7 @@
+@@ -468,7 +468,7 @@
    walk.outer = outer;
    walk.charset_counter = 0;
    walk.surface_counter = 0;
 -  hash_do_for_each (outer->alias_table, make_argmatch_walker_1, &walk);
-+  recode_hash_do_for_each (outer->alias_table, make_argmatch_walker_1, &walk);
++  _recode_hash_do_for_each (outer->alias_table, make_argmatch_walker_1, &walk);
  
    /* Allocate the argmatch and realname arrays, each with a NULL sentinel.  */
  
-@@ -506,7 +506,7 @@
+@@ -500,7 +500,7 @@
  
    walk.charset_counter = 0;
    walk.surface_counter = 0;
 -  hash_do_for_each (outer->alias_table, make_argmatch_walker_2, &walk);
-+  recode_hash_do_for_each (outer->alias_table, make_argmatch_walker_2, &walk);
++  _recode_hash_do_for_each (outer->alias_table, make_argmatch_walker_2, &walk);
  
    return true;
  }
-@@ -661,7 +661,7 @@
+@@ -655,7 +655,7 @@
    /* Count how many symbols we have.  */
  
    walk.number = 0;
 -  hash_do_for_each (outer->alias_table, list_symbols_walker_1, &walk);
-+  recode_hash_do_for_each (outer->alias_table, list_symbols_walker_1, &walk);
++  _recode_hash_do_for_each (outer->alias_table, list_symbols_walker_1, &walk);
  
    /* Allocate a structure to hold them.  */
  
-@@ -671,7 +671,7 @@
+@@ -665,7 +665,7 @@
    /* Copy all symbols in it.  */
  
    walk.number = 0;
 -  hash_do_for_each (outer->alias_table, list_symbols_walker_2, &walk);
-+  recode_hash_do_for_each (outer->alias_table, list_symbols_walker_2, &walk);
++  _recode_hash_do_for_each (outer->alias_table, list_symbols_walker_2, &walk);
  
    /* Sort it.  */
  
-diff -Nur recode-3.5d.orig/src/recode.c recode-3.5d/src/recode.c
---- recode-3.5d.orig/src/recode.c	Wed Jun 28 20:40:20 2000
-+++ recode-3.5d/src/recode.c	Fri Mar 16 04:45:01 2001
-@@ -419,7 +419,7 @@
+diff -Nur recode-3.6.orig/src/outer.c recode-3.6/src/outer.c
+--- recode-3.6.orig/src/outer.c	Wed Aug 30 22:16:14 2000
++++ recode-3.6/src/outer.c	Sun Oct 27 12:01:53 2002
+@@ -615,7 +615,7 @@
+   if (outer->pair_restriction)
+     free (outer->pair_restriction);
+   if (outer->alias_table)
+-    hash_free (outer->alias_table);
++    _recode_hash_free (outer->alias_table);
+   if (outer->argmatch_charset_array)
+     free (outer->argmatch_charset_array);
+   if (outer->one_to_same)
+diff -Nur recode-3.6.orig/src/recode.c recode-3.6/src/recode.c
+--- recode-3.6.orig/src/recode.c	Sat Jul  1 20:22:55 2000
++++ recode-3.6/src/recode.c	Sun Oct 27 12:01:29 2002
+@@ -419,14 +419,14 @@
    if (before_options || after_options)
      return false;
  
 -  table = hash_initialize (0, NULL,
-+  table = recode_hash_initialize (0, NULL,
++  table = _recode_hash_initialize (0, NULL,
  			   ucs2_to_byte_hash, ucs2_to_byte_compare, NULL);
    if (!table)
      return false;
-@@ -431,7 +431,7 @@
+ 
+   if (!ALLOC (data, 256, struct ucs2_to_byte))
+     {
+-      hash_free (table);
++      _recode_hash_free (table);
+       return false;
+     }
+ 
+@@ -434,9 +434,9 @@
      {
        data[counter].code = code_to_ucs2 (step->after, counter);
        data[counter].byte = counter;
 -      if (!hash_insert (table, data + counter))
-+      if (!recode_hash_insert (table, data + counter))
- 	return false;
-     }
- 
-@@ -450,7 +450,7 @@
++      if (!_recode_hash_insert (table, data + counter))
+ 	{
+-	  hash_free (table);
++	  _recode_hash_free (table);
+ 	  free (data);
+ 	  return false;
+ 	}
+@@ -457,7 +457,7 @@
    while (get_ucs2 (&input_value, subtask))
      {
        lookup.code = input_value;
 -      entry = hash_lookup (table, &lookup);
-+      entry = recode_hash_lookup (table, &lookup);
++      entry = _recode_hash_lookup (table, &lookup);
        if (entry)
  	put_byte (entry->byte, subtask);
        else
-diff -Nur recode-3.5d.orig/src/testdump.c recode-3.5d/src/testdump.c
---- recode-3.5d.orig/src/testdump.c	Wed Jun 28 20:40:13 2000
-+++ recode-3.5d/src/testdump.c	Fri Mar 16 04:44:34 2001
+diff -Nur recode-3.6.orig/src/testdump.c recode-3.6/src/testdump.c
+--- recode-3.6.orig/src/testdump.c	Thu Jun 29 17:23:52 2000
++++ recode-3.6/src/testdump.c	Sun Oct 27 12:01:29 2002
 @@ -152,7 +152,7 @@
    size_t size;			/* number of different characters */
    struct ucs2_to_count **array;	/* array into hash table items */
  
 -  table = hash_initialize (0, NULL,
-+  table = recode_hash_initialize (0, NULL,
- 			   ucs2_to_count_hash, ucs2_to_count_compare, NULL);
++  table = _recode_hash_initialize (0, NULL,
+ 			   ucs2_to_count_hash, ucs2_to_count_compare, free);
    if (!table)
      return false;
-@@ -168,7 +168,7 @@
+@@ -168,21 +168,21 @@
  	struct ucs2_to_count *entry;
  
  	lookup.code = character;
 -	entry = hash_lookup (table, &lookup);
-+	entry = recode_hash_lookup (table, &lookup);
++	entry = _recode_hash_lookup (table, &lookup);
  	if (entry)
  	  entry->count++;
  	else
-@@ -177,7 +177,7 @@
- 	      return false;
+ 	  {
+ 	    if (!ALLOC (entry, 1, struct ucs2_to_count))
+ 	      {
+-		hash_free (table);
++		_recode_hash_free (table);
+ 		return false;
+ 	      }
  	    entry->code = character;
  	    entry->count = 1;
 -	    if (!hash_insert (table, entry))
-+	    if (!recode_hash_insert (table, entry))
- 	      return false;
- 	  }
-       }
-@@ -185,11 +185,11 @@
++	    if (!_recode_hash_insert (table, entry))
+ 	      {
+-		hash_free (table);
++		_recode_hash_free (table);
+ 		free (entry);
+ 		return false;
+ 	      }
+@@ -192,14 +192,14 @@
  
    /* Sort results.  */
  
 -  size = hash_get_n_entries (table);
-+  size = recode_hash_get_n_entries (table);
++  size = _recode_hash_get_n_entries (table);
  
    if (!ALLOC (array, size, struct ucs2_to_count *))
-     return false;
+     {
+-      hash_free (table);
++      _recode_hash_free (table);
+       return false;
+     }
 -  hash_get_entries (table, (void **) array, size);
-+  recode_hash_get_entries (table, (void **) array, size);
++  _recode_hash_get_entries (table, (void **) array, size);
  
    qsort (array, size, sizeof (struct ucs2_to_count *), compare_item);
  
-@@ -255,7 +255,7 @@
-     for (cursor = array; cursor < array + size; cursor++)
-       free (*cursor);
-   }
+@@ -260,7 +260,7 @@
+   /* Clean-up.  */
+ 
+   free (array);
 -  hash_free (table);
-+  recode_hash_free (table);
++  _recode_hash_free (table);
  
    SUBTASK_RETURN (subtask);
  }
