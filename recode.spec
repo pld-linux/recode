@@ -1,4 +1,4 @@
-# $Revision: 1.13 $ $Date: 2000-05-24 16:50:46 $
+# $Revision: 1.14 $ $Date: 2000-06-09 07:23:58 $
 Summary:	Utility for converting text between multiple character sets
 Summary(pl):	Uniwersjalny konwerter zestawów znaków
 Name:		recode
@@ -67,7 +67,7 @@ make
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install DESTDIR=$RPM_BUILD_ROOT
 
 strip --strip-unneeded $RPM_BUILD_ROOT%{_libdir}/librecode.so.*.*
 
