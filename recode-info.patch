@@ -1,0 +1,16 @@
+diff -Nru recode-3.5d/doc/recode.texi recode-3.5d.new/doc/recode.texi
+--- recode-3.5d/doc/recode.texi	Wed Jun 28 12:35:13 2000
++++ recode-3.5d.new/doc/recode.texi	Mon Oct 23 18:01:21 2000
+@@ -12,9 +12,10 @@
+ 
+ @include version.texi
+ 
+-@dircategory Internationalization and character sets
++@dircategory Text Processing Tools:
+ @direntry
+-* recode: (recode).     Conversion between character sets and surfaces.
++* recode: (recode).			Conversion between character sets and
++					surfaces
+ @end direntry
+ 
+ @ifinfo
