@@ -1,4 +1,4 @@
-# $Revision: 1.2 $ $Date: 1999-09-19 10:52:56 $
+# $Revision: 1.3 $ $Date: 1999-09-19 11:10:18 $
 Summary:	Utility for converting text between multiple character sets.
 Summary(pl):	Uniwersjalny konwerter zestawów znaków.
 Name:		recode
@@ -26,9 +26,6 @@ Summary(pl):	Uniwersalna biblioteka do konwersja zestawów znaków.
 Group:		Development/Tools
 Group(pl):	Programowanie/Narzêdzia
 Prereq:		/usr/sbin/fix-info-dir
-Requires:	m4
-Requires:	automake
-Requires:	autoconf
 Requires:	%{name} = %{version}
 
 %description devel
@@ -60,28 +57,30 @@ install -d $RPM_BUILD_ROOT/share/locale/{da,de,es,fr,nl,pl,pt,sl,sv}
 make install DESTDIR=$RPM_BUILD_ROOT 
 
 gzip -9nf $RPM_BUILD_ROOT%{_infodir}/* 
+gzip -9nf ABOUT-NLS AUTHORS NEWS BACKLOG README COPYING THANKS COPYING-LIB TODO
 	
 %find_lang %{name}
 
 %post devel
 /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+ldconfig
 
 %preun devel
 /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files -f %{name}.lang
+%files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_prefix}/lib/librecode.so*
-%{_mandir}/man1/*
-
+%doc %{_mandir}/man1/*
+%doc ABOUT-NLS AUTHORS NEWS BACKLOG README COPYING THANKS COPYING-LIB  TODO      
 %files devel
 %defattr(644,root,root,755)
 %doc *.gz
-%attr(755,root,root) %{_bindir}/*
 %{_infodir}/*info*.gz
 %{_prefix}/lib/librecode.*a*
 %{_prefix}/include/*
