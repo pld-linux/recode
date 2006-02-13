@@ -2,7 +2,7 @@ Summary:	Utility for converting text between multiple character sets
 Summary(pl):	Uniwersalny konwerter miêdzy zestawami znaków
 Name:		recode
 Version:	3.6
-Release:	4
+Release:	5
 License:	GPL/LGPL
 Group:		Applications/Text
 Source0:	ftp://ftp.gnu.org/gnu/recode/%{name}-%{version}.tar.gz
@@ -14,6 +14,7 @@ Patch3:		%{name}-hash-nameconflict.patch
 Patch4:		%{name}-ac25x.patch
 Patch5:		%{name}-el.po-no0xD2.patch
 Patch6:		%{name}-pl.po-update.patch
+Patch7:		%{name}-debian-11.patch
 URL:		http://www.gnu.org/software/recode/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -66,6 +67,7 @@ Biblioteka statyczna librecode.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 %{__libtoolize}
