@@ -1,5 +1,5 @@
 Summary:	Utility for converting text between multiple character sets
-Summary(pl.UTF-8):   Uniwersalny konwerter między zestawami znaków
+Summary(pl.UTF-8):	Uniwersalny konwerter między zestawami znaków
 Name:		recode
 Version:	3.6
 Release:	5
@@ -36,7 +36,7 @@ kodowania, włącznie z popularnymi ISO-8859, CP-XXXX oraz Unicode.
 
 %package devel
 Summary:	Header files and documentations for librecode
-Summary(pl.UTF-8):   Pliki nagłówkowe i dokumentacja do librecode
+Summary(pl.UTF-8):	Pliki nagłówkowe i dokumentacja do librecode
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -48,7 +48,7 @@ Pliki nagłówkowe i dokumentacja do librecode.
 
 %package static
 Summary:	Static librecode library
-Summary(pl.UTF-8):   Biblioteka statyczna librecode
+Summary(pl.UTF-8):	Biblioteka statyczna librecode
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
