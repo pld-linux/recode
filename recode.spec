@@ -1,5 +1,5 @@
 Summary:	Utility for converting text between multiple character sets
-Summary(pl):	Uniwersalny konwerter mi阣zy zestawami znak體
+Summary(pl.UTF-8):   Uniwersalny konwerter mi臋dzy zestawami znak贸w
 Name:		recode
 Version:	3.6
 Release:	5
@@ -29,33 +29,33 @@ Free `recode' converts files between various character sets and
 surfaces. It supports more than 200 different character sets and
 surfaces, including well known ISO-8859, CP-XXXX and Unicode.
 
-%description -l pl
-Program `recode' konwertuje pliki pomi阣zy r罂nymi zestawami znak體 i
-kodowaniami. Obs硊guje ponad 200 r罂nych zestaw體 znak體 oraz sposob體
-kodowania, w潮cznie z popularnymi ISO-8859, CP-XXXX oraz Unicode.
+%description -l pl.UTF-8
+Program `recode' konwertuje pliki pomi臋dzy r贸偶nymi zestawami znak贸w i
+kodowaniami. Obs艂uguje ponad 200 r贸偶nych zestaw贸w znak贸w oraz sposob贸w
+kodowania, w艂膮cznie z popularnymi ISO-8859, CP-XXXX oraz Unicode.
 
 %package devel
 Summary:	Header files and documentations for librecode
-Summary(pl):	Pliki nag丑wkowe i dokumentacja do librecode
+Summary(pl.UTF-8):   Pliki nag艂贸wkowe i dokumentacja do librecode
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Header files and documentations for librecode.
 
-%description devel -l pl
-Pliki nag丑wkowe i dokumentacja do librecode.
+%description devel -l pl.UTF-8
+Pliki nag艂贸wkowe i dokumentacja do librecode.
 
 %package static
 Summary:	Static librecode library
-Summary(pl):	Biblioteka statyczna librecode
+Summary(pl.UTF-8):   Biblioteka statyczna librecode
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static librecode library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Biblioteka statyczna librecode.
 
 %prep
