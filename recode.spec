@@ -5,7 +5,7 @@ Version:	3.6
 Release:	6
 License:	GPL/LGPL
 Group:		Applications/Text
-Source0:	ftp://ftp.gnu.org/gnu/recode/%{name}-%{version}.tar.gz
+Source0:	http://ftp.gnu.org/gnu/recode/%{name}-%{version}.tar.gz
 # Source0-md5:	be3f40ad2e93dae5cd5f628264bf1877
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-use_malloc_realloc.patch
