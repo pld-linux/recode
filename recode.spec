@@ -15,6 +15,7 @@ Patch4:		%{name}-ac25x.patch
 Patch5:		%{name}-el.po-no0xD2.patch
 Patch6:		%{name}-pl.po-update.patch
 Patch7:		%{name}-debian-11.patch
+Patch8:		%{name}-gcc4_3.patch
 URL:		http://www.gnu.org/software/recode/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -68,6 +69,7 @@ Biblioteka statyczna librecode.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %build
 %{__libtoolize}
