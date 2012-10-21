@@ -1,0 +1,11 @@
+--- recode-3.6/src/names.c.orig	2012-10-21 17:18:20.230127254 +0200
++++ recode-3.6/src/names.c	2012-10-21 17:20:09.311782629 +0200
+@@ -892,7 +892,7 @@
+ 	    if (ucs2 >= 0)
+ 	      printf (format, code);
+ 	    else if (mnemonic || counter2 != 112)
+-	      printf (blanks);
++	      fputs (blanks, stdout);
+ 
+ 	    if (mnemonic)
+ 	      printf (counter2 == 112 ? " %s\n" : " %-3s", mnemonic);

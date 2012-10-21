@@ -19,6 +19,7 @@ Patch7:		%{name}-debian-11.patch
 Patch8:		%{name}-gcc4_3.patch
 Patch9:		%{name}-bool.patch
 Patch10:	%{name}-ac.patch
+Patch11:	%{name}-format.patch
 URL:		http://recode.progiciels-bpi.ca/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -77,6 +78,7 @@ Biblioteka statyczna librecode.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 # duplicate of m4/*.m4 files
 %{__rm} acinclude.m4
