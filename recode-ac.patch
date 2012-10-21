@@ -1,0 +1,29 @@
+--- recode-3.6/configure.in.orig	2012-10-21 10:45:16.803895982 +0200
++++ recode-3.6/configure.in	2012-10-21 10:58:36.950529071 +0200
+@@ -15,7 +15,6 @@
+ AM_PROG_LIBTOOL
+ 
+ AC_ISC_POSIX
+-AM_C_PROTOTYPES
+ AC_C_CONST
+ AC_C_INLINE
+ ad_AC_PROG_FLEX
+--- recode-3.6/src/Makefile.am.orig	2012-10-21 11:02:39.490518891 +0200
++++ recode-3.6/src/Makefile.am	2012-10-21 11:07:12.987174080 +0200
+@@ -17,7 +17,7 @@
+ # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ # 02111-1307, USA.
+ 
+-AUTOMAKE_OPTIONS = gnits ansi2knr
++AUTOMAKE_OPTIONS = gnits
+ bin_PROGRAMS = recode
+ lib_LTLIBRARIES = librecode.la
+ man_MANS = recode.1
+--- recode-3.6/m4/flex.m4.orig	2000-06-28 16:39:06.000000000 +0200
++++ recode-3.6/m4/flex.m4	2012-10-21 11:40:05.783757954 +0200
+@@ -15,4 +15,5 @@
+ else
+   AC_PROG_LEX
+   AC_DECL_YYTEXT
++  :
+ fi])

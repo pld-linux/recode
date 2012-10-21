@@ -2,10 +2,11 @@ Summary:	Utility for converting text between multiple character sets
 Summary(pl.UTF-8):	Uniwersalny konwerter między zestawami znaków
 Name:		recode
 Version:	3.6
-Release:	6
-License:	GPL/LGPL
+Release:	7
+License:	LGPL v2+ (library), GPL v2+ (utility)
 Group:		Applications/Text
-Source0:	http://ftp.gnu.org/gnu/recode/%{name}-%{version}.tar.gz
+# for future releases (3.7/4.0) see https://github.com/pinard/Recode/
+Source0:	%{name}-%{version}.tar.gz
 # Source0-md5:	be3f40ad2e93dae5cd5f628264bf1877
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-use_malloc_realloc.patch
@@ -16,7 +17,9 @@ Patch5:		%{name}-el.po-no0xD2.patch
 Patch6:		%{name}-pl.po-update.patch
 Patch7:		%{name}-debian-11.patch
 Patch8:		%{name}-gcc4_3.patch
-URL:		http://www.gnu.org/software/recode/
+Patch9:		%{name}-bool.patch
+Patch10:	%{name}-ac.patch
+URL:		http://recode.progiciels-bpi.ca/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	flex
@@ -38,6 +41,7 @@ kodowania, włącznie z popularnymi ISO-8859, CP-XXXX oraz Unicode.
 %package devel
 Summary:	Header files and documentations for librecode
 Summary(pl.UTF-8):	Pliki nagłówkowe i dokumentacja do librecode
+License:	LGPL v2+
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -50,6 +54,7 @@ Pliki nagłówkowe i dokumentacja do librecode.
 %package static
 Summary:	Static librecode library
 Summary(pl.UTF-8):	Biblioteka statyczna librecode
+License:	LGPL v2+
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -70,11 +75,15 @@ Biblioteka statyczna librecode.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
+%patch10 -p1
+
+# duplicate of m4/*.m4 files
+%{__rm} acinclude.m4
 
 %build
 %{__libtoolize}
-cp m4/lcmessage.m4 .
-%{__aclocal} -I .
+%{__aclocal} -I m4
 %{__autoconf}
 %{__automake}
 %configure
@@ -102,16 +111,18 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS BACKLOG README THANKS TODO
-%attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/lib*.so.*.*
-%{_infodir}/*info*
-%{_mandir}/man1/*
+%attr(755,root,root) %{_bindir}/recode
+%attr(755,root,root) %{_libdir}/librecode.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/librecode.so.0
+%{_infodir}/recode.info*
+%{_mandir}/man1/recode.1*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
-%{_includedir}/*
+%attr(755,root,root) %{_libdir}/librecode.so
+%{_libdir}/librecode.la
+%{_includedir}/recode.h
+%{_includedir}/recodext.h
 
 %files static
 %defattr(644,root,root,755)
