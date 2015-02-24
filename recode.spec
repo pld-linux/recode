@@ -2,7 +2,7 @@ Summary:	Utility for converting text between multiple character sets
 Summary(pl.UTF-8):	Uniwersalny konwerter między zestawami znaków
 Name:		recode
 Version:	3.6
-Release:	7
+Release:	8
 License:	LGPL v2+ (library), GPL v2+ (utility)
 Group:		Applications/Text
 # for future releases (3.7/4.0) see https://github.com/pinard/Recode/
