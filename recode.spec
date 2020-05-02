@@ -83,6 +83,8 @@ Biblioteka statyczna librecode.
 # duplicate of m4/*.m4 files
 %{__rm} acinclude.m4
 
+%{__sed} -i '1 i @documentencoding ISO-8859-1' doc/recode.texi
+
 %build
 %{__libtoolize}
 %{__aclocal} -I m4
