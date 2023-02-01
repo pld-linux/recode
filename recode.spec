@@ -1,31 +1,25 @@
+# TODO: package python extension
+%bcond_without  tests
+#
 Summary:	Utility for converting text between multiple character sets
 Summary(pl.UTF-8):	Uniwersalny konwerter między zestawami znaków
 Name:		recode
-Version:	3.6
-Release:	8
+Version:	3.7.14
+Release:	1
 License:	LGPL v2+ (library), GPL v2+ (utility)
 Group:		Applications/Text
-# for future releases (3.7/4.0) see https://github.com/pinard/Recode/
-Source0:	%{name}-%{version}.tar.gz
-# Source0-md5:	be3f40ad2e93dae5cd5f628264bf1877
-Patch0:		%{name}-info.patch
-Patch1:		%{name}-use_malloc_realloc.patch
-Patch2:		%{name}-am.patch
-Patch3:		%{name}-hash-nameconflict.patch
-Patch4:		%{name}-ac25x.patch
-Patch5:		%{name}-el.po-no0xD2.patch
-Patch6:		%{name}-pl.po-update.patch
-Patch7:		%{name}-debian-11.patch
-Patch8:		%{name}-gcc4_3.patch
-Patch9:		%{name}-bool.patch
-Patch10:	%{name}-ac.patch
-Patch11:	%{name}-format.patch
-URL:		http://recode.progiciels-bpi.ca/
+Source0:        https://github.com/rrthomas/recode/releases/download/v%{version}/recode-%{version}.tar.gz
+# Source0-md5:	d88b41fd27549123a0822e5a3fae98a8
+Patch0:         %{name}-info.patch
+Patch1:		%{name}-pl.po-update.patch
+URL:		https://github.com/rrthomas/recode
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	flex
 BuildRequires:	libtool
 BuildRequires:	texinfo
+BuildRequires:  python3
+BuildRequires:  python3-modules
 Requires(post,postun):	/sbin/ldconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -67,21 +61,8 @@ Biblioteka statyczna librecode.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-
-# duplicate of m4/*.m4 files
-%{__rm} acinclude.m4
+#%patch0 -p1
+#%patch1 -p1
 
 %{__sed} -i '1 i @documentencoding ISO-8859-1' doc/recode.texi
 
@@ -92,6 +73,10 @@ Biblioteka statyczna librecode.
 %{__automake}
 %configure
 %{__make}
+
+%if %{with tests}
+%{__make} check
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -114,10 +99,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS NEWS BACKLOG README THANKS TODO
+%doc AUTHORS NEWS README THANKS TODO
 %attr(755,root,root) %{_bindir}/recode
 %attr(755,root,root) %{_libdir}/librecode.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/librecode.so.0
+%attr(755,root,root) %ghost %{_libdir}/librecode.so.3
 %{_infodir}/recode.info*
 %{_mandir}/man1/recode.1*
 
