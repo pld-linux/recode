@@ -1,7 +1,6 @@
-diff -Nru recode-3.5d/doc/recode.texi recode-3.5d.new/doc/recode.texi
---- recode-3.5d/doc/recode.texi	Wed Jun 28 12:35:13 2000
-+++ recode-3.5d.new/doc/recode.texi	Mon Oct 23 18:01:21 2000
-@@ -12,9 +12,10 @@
+--- recode-3.7.14/doc/recode.texi.orig	2023-03-06 20:15:50.628966725 +0100
++++ recode-3.7.14/doc/recode.texi	2023-03-06 20:46:44.165591921 +0100
+@@ -13,9 +13,9 @@
  
  @include version.texi
  
@@ -9,8 +8,7 @@ diff -Nru recode-3.5d/doc/recode.texi recode-3.5d.new/doc/recode.texi
 +@dircategory Text Processing Tools:
  @direntry
 -* recode: (recode).     Conversion between character sets and surfaces.
-+* recode: (recode).			Conversion between character sets and
-+					surfaces
++* recode: (recode).			Conversion between character sets and surfaces
  @end direntry
  
  @ifinfo

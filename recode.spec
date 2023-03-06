@@ -1,5 +1,7 @@
 # TODO: package python extension
-%bcond_without  tests
+#
+# Conditional build:
+%bcond_without  tests	# unit tests
 #
 Summary:	Utility for converting text between multiple character sets
 Summary(pl.UTF-8):	Uniwersalny konwerter między zestawami znaków
@@ -13,13 +15,16 @@ Source0:        https://github.com/rrthomas/recode/releases/download/v%{version}
 Patch0:         %{name}-info.patch
 Patch1:		%{name}-pl.po-update.patch
 URL:		https://github.com/rrthomas/recode
-BuildRequires:	autoconf >= 2.53
+BuildRequires:	autoconf >= 2.71
 BuildRequires:	automake
 BuildRequires:	flex
-BuildRequires:	libtool
+BuildRequires:	gettext-tools >= 0.19
+BuildRequires:	help2man
+BuildRequires:	libtool >= 2:2
 BuildRequires:	texinfo
-BuildRequires:  python3
-BuildRequires:  python3-modules
+BuildRequires:	python3 >= 1:3.5
+BuildRequires:	python3-Cython
+BuildRequires:	python3-modules >= 1:3.5
 Requires(post,postun):	/sbin/ldconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -61,10 +66,12 @@ Biblioteka statyczna librecode.
 
 %prep
 %setup -q
-#%patch0 -p1
-#%patch1 -p1
+%patch0 -p1
+%patch1 -p1
 
 %{__sed} -i '1 i @documentencoding ISO-8859-1' doc/recode.texi
+
+%{__rm} po/stamp-po
 
 %build
 %{__libtoolize}
