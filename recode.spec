@@ -66,8 +66,8 @@ Biblioteka statyczna librecode.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 
 %{__sed} -i '1 i @documentencoding ISO-8859-1' doc/recode.texi
 
